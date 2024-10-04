@@ -1,0 +1,8 @@
+------------------------------
+STUDENT MATH RECORD SCORE 2023
+------------------------------
+
+ANNA 98
+RAUL 97
+PIERINA 95
+LOUIS 85
