@@ -5,41 +5,35 @@
 # • Focus Areas: Lists, dictionaries, loops, conditional logic, and file handling (optional).
 
 
-import os
-
 # THIS FUNCTION WILL ADD STUDENT INFORMATION.
 # THE INFORMATION ADDED WILL BE STORE IN THE STUDENT LIST, AND CAN BE DISPLAY OR SEARCH LATER.
 # START BY ASSUMING THE STUDENT IS NOT IN THE SYSTEM.
 # THE P VARIABLE WILL CHECK IF THE STUDENT-ID IS ALREADY EXIST, TO AVOID REPEAT VALUES.
-def add_std():
-    found = False  # START BY ASSUMING THE STUDENT IS NOT FOUND.
-    print()
-    print("--------------------")
-    student_Id = input("Enter Student_Id: ")
+def add_student():
+    found = False  # Start by assuming the student is not found
+    print("\n--------------------")
+    student_ID = input("Enter Student_ID: ")
 
-    # CHECK IF THE STUDENT ID IS IN THE SYSTEM
+    # Check if the student ID already exists
     for p in student:
-        if student_Id == p["Student_Id"]:
-            found = True  # IF ID STUDENT IS NOT FOUND, WILL ASK YOU TO ADD IT.
+        if student_ID == p["Student_ID"]:
+            found = True  # Student ID found, so no need to add again
             break
-        
+
+    # If not found, add a new student
     if not found:
         name = input("Enter Name: ")
         sub = input("Enter Subject: ")
         grade = input("Enter Grade: ")
-        rec = {"Student_Id": student_Id, "Name": name, "Subject": sub, "Grade": grade}
+        rec = {"Student_ID": student_ID, "Name": name, "Subject": sub, "Grade": grade}
         student.append(rec)
-        print()
         print("--------------------")
         print("Student record added successfully!")
         print("--------------------")
-        print()
     else:
-        print()
-        print("--------------------")
+        print("\n--------------------")
         print("Student-ID is already in the system.")
-        print("--------------------")
-        print()
+        print("--------------------\n")
 
 
 # THIS FUNCTION WILL DISPLAY STUDENT INFORMATION.
@@ -48,204 +42,120 @@ def add_std():
 # THE VARIABLE i IS DECLARED TO STORE STUDENT LIST THAT CONTAIN ALL STUDENT DATA.
 # NULL PRINT FUNCTION CONTAIN EMPTY STRING AND IS IMPLEMENT HERE TO SEPARATE ONE OUTPUT TO OTHER OUTPUT.
 
-def dis_std():
+def display_students():
     found = False
-    print()
-    print("--------------------")
+    print("\n--------------------------------")
     for i in student:
-        found=True
-        print("Student_Id: ",i["Student_Id"])
+        found = True
+        print("Student_ID: ",i["Student_ID"])
         print("Name: ", i["Name"])
         print("Subject: ", i["Subject"])
-        print("Grade: ", i["Grade"])
-        print("--------------------")
-        print()
+        print("Grade: ", int(i["Grade"]))
+        print("--------------------\n")
 
     if not found:
-        print()
-        print("-----------------------------------------")
+        print("\n-----------------------------------------")
         print("No Student data Found. Please Add Student")
-        print("-----------------------------------------")
-        print()
-
-    return found
-
-
-#THIS FUNCTION WILL DISPLAY THE EQUIVALENT OF THE GRADES IN LETTERS.
-
-def get_letter_grade(grade):
-    if grade >= 0 and grade <= 30:
-        return "F"
-    elif grade >= 31 and grade <= 55:
-        return "D"
-    elif grade >= 56 and grade <= 73:
-        return "C"
-    elif grade >= 74 and grade <= 89:
-        return "B"
-    elif grade >= 90 and grade <= 94:
-        return "A"
-    elif grade >= 95 and grade <= 100:
-        return "A+"
-    return "Invalid"
-
-# THIS FUNCTION WILL DISPLAY STUDENT'S GRADES IN LETTERS.
-# HERE YOU WILL GET ALSO THE MAXIMUM STUDENT GRADES.
-# THE DISPLAY FUNCTION IS CALLED HERE TO SHOW THE STORE STUDENTS AND WITH THE GRADE FUNCTION
-# WILL COMPARE THE NUMBERS IN LETTERS.
-def grades():
-    stu_grades = []
-
-    # THE dis_std FUNCTION IS CALLED HERE TO DISPLAY THE STUDENTS IN THE SYSTEM.
-    if not dis_std():
-        return  # IF THE STUDENT IS NOT IN THE SYSTEM OR IS NOT FOUND, WILL SHOW A MESSAGE.
-
-    # A LOOP TO INPUT GRADES FOR STUDENTS.
-    for i in range(len(student)):
-        try:
-            grade = int(input(f"Enter the grade for student {student[i]['Name']} (ID: {student[i]['Student_Id']}): "))
-            stu_grades.append(grade)
-        except ValueError:
-            print("Please enter a valid integer.")
-
-    # HERE DISPLAY THE GRADES WITH THEIR CORRESPONDING CATEGORIES
-    for u in range(len(stu_grades)):
-        letter_grade = get_letter_grade(stu_grades[u])
-        print(f"Student {student[u]['Name']} (ID: {student[u]['Student_Id']}) is graded {letter_grade}")
-
-    # THIS CONVERT THE MAXIMUM STUDENTS GRADES IN LETTER FORM.
-    if stu_grades:
-        max_grade = max(stu_grades)
-        max_student_index = stu_grades.index(max_grade)
-        max_letter_grade = get_letter_grade(max_grade)
-        print(f"\nThe student with the highest grade is {student[max_student_index]['Name']} (ID: {student[max_student_index]['Student_Id']}) with a grade of {max_letter_grade}.")
-
-    print(f"\nTotal of Students' Grades: {stu_grades}\n")
+        print("-----------------------------------------\n")
 
 
 # THIS DEFINE THE SEARCH FUNCTION THAT WILL BE SEARCH FOR THE INFORMATION OF A SPECIFIC STUDENT.
 # usi (USER STUDENT ID) IS A FUNCTION THAT WILL HELP TO MATCH WHEN THE USER SEARCH WITH THE STUDENT ID THAT IS STORE IN THE STUDENT LIST.
 # IF THERE IS AN INVALID STUDENT ID, THE USER WILL BE GET A MESSAGE.
-
-def search():
-    found=False
-    print()
-    print("--------------------------------")
-    usi=input("Enter a Specific Student Id or Name: ")
+def search_student():
+    found = False
+    print("\n--------------------------------")
+    usi = input("Enter a Specific Student Id:")
     for j in student:
-        if usi==j["Student_Id"] or usi ==j ["Name"]:
-            found=True
-            print("Student_Id: ", j["Student_Id"])
+        if usi == j["Student_ID"]:
+            found = True
+            print("Student_ID: ", j["Student_ID"])
             print("Name: ", j["Name"])
             print("Subject: ", j["Subject"])
             print("Grade: ", j["Grade"])
-            print("--------------------")
-            print()
+            # Get the grade value for the calculation and determine what is the corresponding letter grade
+            grade = int(j["Grade"])
+            if grade >= 90:
+                print('Letter Grade: A')
+            elif grade >= 80:
+                print('Letter Grade: B')
+            elif grade >= 70:
+                print('Letter Grade: C')
+            elif grade >= 60:
+                print('Letter Grade: D')
+            else:
+                print('Letter Grade: F')
+            print("--------------------\n")
             break
     if not found:
-        print()
-        print("--------------------")
+        print("\n--------------------")
         print("Student Not Found")
-        print("--------------------")
-        print()
+        print("--------------------\n")
 
+def calculate_grade_average():
+    sum_of_grades = 0
+    count = 0
 
-# THIS DISPLAY FILE TEXT WITH STUDENT HISTORY RECORD PER YEAR
-# r = READ THIS FUNCTION WILL PRINT THE INFORMATION THAT IS IN THE TEXT FILE.
-# a = APPEND FUNCTION IS AVAILABLE TO RUN IF WE WANT TO ADD A NEW STUDENT IN THE TEXT FILE.
-# w = Overwrite - THIS FUNCTION WILL DELETE THE CONTENT IN THE FILE AND WILL OVERWRITE NEW INFORMATION
-# x = CREATE A FILE FOR WRITING OR CREATES THE FILE IF IT DOES NOT EXIST.
-# DELETED FUNCTION IS AVAILABLE IF WE WANT TO DELETE A FILE.
-# ERROR MESSAGE WILL RETURN WHEN A TEXT FILE IS NOT IN THE SYSTEM.
+    for record in student:
+        grade = int(record["Grade"])
+        sum_of_grades += grade
+        count += 1
+    if count > 0:
+        average_grade = sum_of_grades / count
+        return average_grade
+    else:
+        return None
 
-def record():
+def calculate_max_grade():
+    max_grade = None
 
-# Append - ADD DATA TO THE FILE
-#    f = open("record.txt", "a")
-#    f.write("Andrew 87\n")
+    for record in student:
+        grade = int(record["Grade"])
+        if max_grade is None or grade > max_grade:
+            max_grade = grade
+    return max_grade
 
-# Write - OVERWRITE
-#    f = open("record.txt", "w")
-#    f.write("Updated the Record")
-
-# Create A NEW FILE
-#    if not os.path.exists("record_2024.text"):
-#        f = open("example.text", "x")
-
-# THIS CODE WILL DELETE A FILE
-#    if not os.path.exists("example.text"):
-#       os.remove("example.text")
-#    else:
-#        print("The file you want to delete does not exist")
-#        f.close()
-
-
-# Read - PRINT THE INFORMATION THAT IS IN THE FILE
-    f = open("record.txt")
-    print(f.read())
-    print()
-    print("--------------------")
-    f.close()
-
-    print()
-    print("-----------------------------------------------")
-    print("------------STUDENTS 2023 HISTORY--------------")
-    print("-----------------------------------------------")
-    print()
-    t = open("school.csv")
-    print(t.read())
-    print()
-    print("--------------------")
-    t.close()
-
-#    try:
-#        f = open("record.txt")
-#        print(f.read())
-#    except:
-#        print("The file you want to read doesn't exist")
-#    finally:
-#       f.close()
-
-
+#
 # THERE ARE 4 OPTIONS THAT THE USER CAN CHOOSE.
 # THE PRINT FUNCTION DISPLAY THE DIFFERENT OPTIONS FOR THE USER.
 # IF THERE IS AN INVALID VALUE, THE USER WILL BE GET A MESSAGE.
 
-student=[]
-print()
-print("-----------------------------------------------")
+student = []
+print("\n-----------------------------------------------")
 print("Welcome to the Student Grades Management System")
-print("------------------------------------------------")
-print()
+print("------------------------------------------------\n")
 while True:
     print("1. Add Student")
     print("2. Display Students")
     print("3. Search Student")
-    print("4. Average Student Grades")
-    print("5. Students History Record")
-    print("0. Exit")
-    op=int(input("Enter Your Choice: "))
-    print("------------------------------")
-    print()
+    print("4. Display Average Grade")
+    print("5. Display Highest Grade")
+    print("6. Exit")
+    op = int(input("Enter Your Choice: "))
+    print("--------------------\n")
 
-    if op==1:
-        add_std()
-    elif op==2:
-        dis_std()
-    elif op==3:
-        search()
-    elif op==4:
-        grades()
-    elif op==5:
-        record()
-    elif op==0:
+    if op == 1:
+        add_student()
+    elif op == 2:
+        display_students()
+    elif op == 3:
+        search_student()
+    elif op == 4:
+        average_grade = calculate_grade_average()
+        if average_grade is not None:
+            print("Average Grade: ", average_grade)
+        else:
+            print("No Students Found.")
+    elif op == 5:
+        max_grade = calculate_max_grade()
+        if max_grade is not None:
+            print("Max Grade: ", max_grade)
+        else:
+            print("No Students Found.")
+    elif op == 6:
         print("Thank you, have a nice day! \n")
         break
-
-    #elif op==0:
-     #   break
     else:
-        print()
-        print("--------------------")
+        print("\n--------------------")
         print("Invalid input")
-        print("--------------------")
-        print()
+        print("--------------------\n")
